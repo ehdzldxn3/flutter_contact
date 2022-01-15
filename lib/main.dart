@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(
@@ -17,6 +18,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  getPermission() async {
+    //권한상태 체크
+    var status = await Permission.contacts.status;
+    if(status.isGranted) {  //권한을 허락해둔 상태
+      print('허락해줌');
+    } else if (status.isDenied) { //권한이 없거나 거절 했을떄
+      print('거절함');
+      Permission.contacts.request();
+      //권한설정 창 열어주는것
+      openAppSettings();
+    }
+  }
+  
+  //앱이 처음 실행될떄 실행 
+  @override
+  void initState() {
+    super.initState();
+    getPermission();
+  }
 
   var name = ['김영숙', '홍길동', '치킨집'];
   var like = [0, 0, 0];
@@ -43,7 +64,12 @@ class _MyAppState extends State<MyApp> {
             });
           },
         ),
-        appBar: AppBar( title: Text(total.toString()),),
+        appBar: AppBar( title: Text(total.toString()),
+                actions: [
+                  IconButton(onPressed: (){
+                    getPermission();
+                  }, icon: const Icon(Icons.contacts))
+                ],),
         body: ListView.builder(
           itemCount: name.length,
           itemBuilder: (context, i){
