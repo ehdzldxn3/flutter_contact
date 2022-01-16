@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getPermission();
+    // getPermission();
   }
 
   var name = ['김영숙', '홍길동', '치킨집'];
