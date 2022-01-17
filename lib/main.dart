@@ -35,17 +35,14 @@ class _MyAppState extends State<MyApp> {
       //핸드폰에 있는 전화번호부 가져와서 저장
       var contacts = await ContactsService.getContacts();
 
-      // for(var i=0; i<contacts.length; i++) {
-      //   print('전화번호');
-      //   print();
-      // }
 
       print("contacts : ");
-      //print(contacts[0].givenName ?? '뜨른');
 
-      print(contacts[0].phones!.elementAt(0).value ?? '!');
-      print(contacts[0].phones?.elementAt(0).value);
-          //가져온 전화번호 네임이라는 리스트 안에 저장
+      //전화번호부 핸드폰
+
+
+
+         //가져온 전화번호 네임이라는 리스트 안에 저장
         setState(() {
           name = contacts;
         });
@@ -106,7 +103,7 @@ class _MyAppState extends State<MyApp> {
           itemBuilder: (context, i){
             return ListTile(
               title: Text(name[i].givenName.toString()),
-              subtitle: Text(name[i].phones!.elementAt(0).value.toString()),
+              subtitle: name[i].phones.length == 0 ? Text('번호없다') : Text(name[i].phones!.elementAt(0).value.toString())
             );
           },
         ),
